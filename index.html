@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post on LinkedIn</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    textarea {
+      width: 90%;
+      height: 120px;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      margin: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .copy-btn {
+      background-color: #0073b1;
+      color: white;
+    }
+    .go-btn {
+      background-color: #0a66c2;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📢 Share Your LinkedIn Post</h2>
+  <p>Step 1: Click "Copy Text"<br>Step 2: Click "Go to LinkedIn", paste, and post!</p>
+
+  <textarea id="postText" readonly>
+Excited to be part of the #CognizantEvent2025 in Chennai! 🚀
+#LifeAtCognizant #TeamWork #Innovation
+  </textarea><br>
+
+  <button class="copy-btn" onclick="copyText()">📋 Copy Text</button>
+  <button class="go-btn" onclick="goToLinkedIn()">🔗 Go to LinkedIn</button>
+
+  <script>
+    function copyText() {
+      const textArea = document.getElementById("postText");
+      textArea.select();
+      textArea.setSelectionRange(0, 99999); // For mobile
+      document.execCommand("copy");
+      alert("Text copied to clipboard!");
+    }
+
+    function goToLinkedIn() {
+      window.open("https://www.linkedin.com/feed/", "_blank");
+    }
+  </script>
+
+</body>
+</html>
