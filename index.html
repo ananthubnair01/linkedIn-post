@@ -107,12 +107,12 @@
 
   <div class="card">
     <h2>📢 Share Your LinkedIn Post</h2>
-    <p>Step 1: Copy the text below<br>Step 2: Paste it on LinkedIn and share!</p>
+    <p>Step 1: Copy the text below<br>Step 2: Paste it on LinkedIn or Instagram and share!</p>
 
     <textarea id="postText" readonly>
 "Enter your Quote here"
 
-My "heart Emoji" moment, crafted by design!
+My "❤️" moment, crafted by design!
       
 #EnspireDeliverySummitAwards2025
 #CognizantAroundTheWorld
@@ -127,14 +127,7 @@ My "heart Emoji" moment, crafted by design!
     <div>
       <button class="btn copy-btn" onclick="copyText()">📋 Copy Text</button>
       <button class="btn go-btn" onclick="goToLinkedIn()">🔗 Go to LinkedIn</button>
-      <button class="go-btn" onclick="goToInstagram()">📸 Go to Instagram</button>
-
-<script>
-  function goToInstagram() {
-    window.open("https://www.instagram.com/", "_blank");
-  }
-</script>
-
+      <button class="btn go-btn" onclick="goToInstagram()">📸 Go to Instagram</button>
     </div>
   </div>
 
@@ -149,6 +142,10 @@ My "heart Emoji" moment, crafted by design!
 
     function goToLinkedIn() {
       window.open("https://www.linkedin.com/feed/", "_blank");
+    }
+
+    function goToInstagram() {
+      window.open("https://www.instagram.com/", "_blank");
     }
   </script>
 
