@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Post on LinkedIn</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Share Your Post</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #4cb3cf;
-      --secondary-color: #1b2e35;
+      --primary: #4cb3cf;
+      --primary-hover: #3ca4bd;
+      --secondary: #1b2e35;
+      --secondary-hover: #13252b;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: rgba(255, 255, 255, 0.3);
     }
 
     * {
@@ -16,89 +20,154 @@
 
     body {
       margin: 0;
-      padding: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #eef7f9, #d9f2f8);
+      background: linear-gradient(135deg, #a2d9f5, #e3f6fc, #d9f2f8);
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Background animated gradient bubbles */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle at center, #4cb3cf55, transparent 70%);
+      border-radius: 50%;
+      top: -100px;
+      left: -150px;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    body::after {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle at center, #1b2e3555, transparent 70%);
+      border-radius: 50%;
+      bottom: -150px;
+      right: -150px;
+      animation: float 12s infinite alternate-reverse ease-in-out;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(40px) translateX(30px); }
     }
 
     .card {
-      background: white;
+      position: relative;
+      backdrop-filter: blur(16px) saturate(180%);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
       padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       text-align: center;
-      max-width: 520px;
+      max-width: 560px;
       width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
     }
 
     h2 {
+      font-size: 1.8rem;
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary);
       margin-top: 0;
-      font-size: 1.6rem;
-      color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
+      margin-bottom: 0.75rem;
     }
 
     p {
-      color: #444;
-      font-size: 0.95rem;
+      color: #333;
+      font-size: 1rem;
       margin-bottom: 1.5rem;
     }
 
     textarea {
       width: 100%;
-      height: 120px;
+      height: 140px;
       padding: 1rem;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1px solid #ccc;
       font-size: 1rem;
-      color: #333;
-      margin-bottom: 1.5rem;
+      color: #222;
       resize: none;
+      margin-bottom: 1.5rem;
+      background: #fff;
     }
 
     .btn {
-      padding: 0.75rem 1.5rem;
+      padding: 0.85rem 1.6rem;
       font-size: 1rem;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
-      margin: 0.5rem 0.25rem;
-      transition: background 0.3s ease, transform 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
+      margin: 0.4rem;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
     }
 
     .copy-btn {
-      background-color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary), #6ed1e7);
       color: white;
+      box-shadow: 0 6px 15px rgba(76,179,207,0.4);
     }
 
     .copy-btn:hover {
-      background-color: #3ca4bd;
-      transform: translateY(-2px);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(76,179,207,0.55);
     }
 
     .go-btn {
-      background-color: var(--secondary-color);
+      background: linear-gradient(135deg, var(--secondary), #344f56);
       color: white;
+      box-shadow: 0 6px 15px rgba(27,46,53,0.4);
     }
 
     .go-btn:hover {
-      background-color: #13252b;
-      transform: translateY(-2px);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 20px rgba(27,46,53,0.55);
+    }
+
+    /* Toast for copy success */
+    .toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     @media (max-width: 480px) {
       .card {
-        padding: 1.8rem;
+        padding: 2rem;
+      }
+      h2 {
+        font-size: 1.4rem;
       }
     }
   </style>
@@ -107,11 +176,11 @@
 
   <div class="card">
     <h2>📢 Share Your LinkedIn Post</h2>
-    <p>Step 1: Copy the text below<br>Step 2: Paste it on LinkedIn or Instagram and share!</p>
+    <p>Copy the text below and share your vibe on LinkedIn or Instagram ✨</p>
 
     <textarea id="postText" readonly>
-DESIGN DAY 2025 "&#10084;&#65039;"
-      
+DESIGN DAY 2025 ❤️
+
 #CognizantMoment
 #CognizantDesignDay2025
 #BeCognizant
@@ -125,18 +194,23 @@ DESIGN DAY 2025 "&#10084;&#65039;"
 
     <div>
       <button class="btn copy-btn" onclick="copyText()">📋 Copy Text</button>
-      <button class="btn go-btn" onclick="goToLinkedIn()">🔗 Go to LinkedIn</button>
-      <button class="btn go-btn" onclick="goToInstagram()">📸 Go to Instagram</button>
+      <button class="btn go-btn" onclick="goToLinkedIn()">🔗 LinkedIn</button>
+      <button class="btn go-btn" onclick="goToInstagram()">📸 Instagram</button>
     </div>
   </div>
+
+  <div class="toast" id="toast">✅ Text copied to clipboard!</div>
 
   <script>
     function copyText() {
       const textArea = document.getElementById("postText");
       textArea.select();
-      textArea.setSelectionRange(0, 99999); // For mobile
-      document.execCommand("copy");
-      alert("Text copied to clipboard!");
+      textArea.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(textArea.value);
+      
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
     }
 
     function goToLinkedIn() {
@@ -150,5 +224,3 @@ DESIGN DAY 2025 "&#10084;&#65039;"
 
 </body>
 </html>
-
-
